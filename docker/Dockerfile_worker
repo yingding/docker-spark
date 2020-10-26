@@ -9,4 +9,9 @@ ENV SPARK_WORKER_LOG /spark/logs
 
 EXPOSE 8081
 
+# TODO: Change to entrypoint
+
+# https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact
+# run in shell form, the process will be run as a subprocess of sh, will not receive stop signal from docker stop
+# https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example
 ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker -c $CORES -m $MEMORY spark://$MASTER_CONTAINER_NAME:7077
