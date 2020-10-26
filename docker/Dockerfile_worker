@@ -1,4 +1,4 @@
-FROM sdesilva26/spark_base
+FROM yingding/spark_base
 
 ENV MASTER_CONTAINER_NAME=spark-master
 ENV CORES=3
