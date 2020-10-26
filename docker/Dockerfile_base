@@ -1,24 +1,35 @@
-# This base image comes shipped with java 8 (needed for scala)
-FROM openjdk:8-jdk-alpine
-COPY --from=python:3.6 / /
+# This base image comes shipped with java 11 (needed for scala)
+# The openj9 version might be more RAM efficient, but suffers on CPU efficiency
+# More details can be found:https://www.royvanrijn.com/blog/2018/05/openj9-jvm-shootout/
+# FROM adoptopenjdk:11.0.8_10-jdk-openj9-0.21.0-bionic
+FROM adoptopenjdk:11.0.8_10-jdk-hotspot-bionic
+
+LABEL author="Yingding Wang"
+LABEL version="0.1"
+
+# COPY --from=python:3.6 / /
 
 # Set env variables
 ENV DAEMON_RUN=true
-ENV SPARK_VERSION=2.4.5
-ENV HADOOP_VERSION=2.7
-ENV SCALA_VERSION=2.12.3
+ENV SPARK_VERSION=3.0.1
+ENV HADOOP_VERSION=3.2
+ENV SCALA_VERSION=2.12.13
 ENV SCALA_HOME=/usr/share/scala
 ENV SPARK_HOME=/spark
-ENV SPARK_OPTS --driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info
-ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.7-src.zip
+ENV SPARK_OPTS --driver-java-options='-Xms1024M -Xmx4096M -Dlog4j.logLevel=info -Dio.netty.tryReflectionSetAccessible=true'
 
+# ENV PYTHONPATH $SPARK_HOME/python:$SPARK_HOME/python/lib/py4j-0.10.7-src.zip
 
 # Add additional repo's for apk to use
-RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.3/main > /etc/apk/repositories; \
-    echo http://mirror.yandex.ru/mirrors/alpine/v3.3/community >> /etc/apk/repositories
+# RUN echo http://mirror.yandex.ru/mirrors/alpine/v3.3/main > /etc/apk/repositories; \
+#    echo http://mirror.yandex.ru/mirrors/alpine/v3.3/community >> /etc/apk/repositories
 
-# Update commands
-RUN apk --update add wget tar bash coreutils procps openssl
+# Update commands in Ubuntu Bionic 18.4
+# RUN apk --update add wget tar bash coreutils procps openssl
+RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates jq
+
+# Tutorial
+# https://github.com/mvillarrealb/docker-spark-cluster/blob/master/docker/base/Dockerfile
 
 # Install Scala
 RUN apk add --no-cache --virtual=.build-dependencies wget ca-certificates && \
