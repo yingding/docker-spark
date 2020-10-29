@@ -79,3 +79,10 @@ RUN tar -xzf spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz && \
 # RUN wget https://repo1.maven.org/maven2/org/apache/hadoop/hadoop-azure/${HADOOP_VERSION}.0/hadoop-azure-${HADOOP_VERSION}.0.jar -P $SPARK_HOME/jars/ && \
 #     wget https://repo1.maven.org/maven2/com/microsoft/azure/azure-storage/8.6.3/azure-storage-8.6.3.jar -P $SPARK_HOME/jars/
 
+
+# Handling PID 1 subprocess
+# Add Tini
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+

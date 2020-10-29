@@ -6,6 +6,10 @@ ENV MEMORY=6G
 ENV SPARK_WORKER_WEBUI_PORT 8081
 ENV SPARK_WORKER_LOG /spark/logs
 
+# copy entry point to root
+COPY ./scripts/worker/entrypoint.sh /
+# set entry point runable
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8081
 
@@ -14,4 +18,7 @@ EXPOSE 8081
 # https://docs.docker.com/engine/reference/builder/#understand-how-cmd-and-entrypoint-interact
 # run in shell form, the process will be run as a subprocess of sh, will not receive stop signal from docker stop
 # https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example
-ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker -c $CORES -m $MEMORY spark://$MASTER_CONTAINER_NAME:7077
+# ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker -c $CORES -m $MEMORY spark://$MASTER_CONTAINER_NAME:7077
+
+# https://hynek.me/articles/docker-signals/
+ENTRYPOINT ["/tini", "-v", "--", "/entrypoint.sh"]

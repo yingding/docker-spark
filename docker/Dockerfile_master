@@ -4,7 +4,14 @@ ENV SPARK_MASTER_PORT 7077
 ENV SPARK_MASTER_WEBUI_PORT 8080
 ENV SPARK_MASTER_LOG /spark/logs
 
+# copy entry point to root
+COPY ./scripts/master/entrypoint.sh /
+# set entry point runable
+RUN chmod +x /entrypoint.sh
+
 # expose 4040 for the scala interactive shell to publish the job scheduler url
 EXPOSE 8080 4040
 
-ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.master.Master
+# https://hynek.me/articles/docker-signals/
+ENTRYPOINT ["/tini", "-v", "--", "/entrypoint.sh"]
+# ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.master.Master
