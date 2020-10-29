@@ -20,5 +20,7 @@ EXPOSE 8081
 # https://docs.docker.com/engine/reference/builder/#exec-form-entrypoint-example
 # ENTRYPOINT $SPARK_HOME/bin/spark-class org.apache.spark.deploy.worker.Worker -c $CORES -m $MEMORY spark://$MASTER_CONTAINER_NAME:7077
 
+# use -vv so that the terminate of subprocess by tini is visible in docker log,
+# not using -vvv since it will generate output every seconds.
 # https://hynek.me/articles/docker-signals/
-ENTRYPOINT ["/tini", "-v", "--", "/entrypoint.sh"]
+ENTRYPOINT ["/tini", "-vv", "--", "/entrypoint.sh"]
