@@ -18,7 +18,7 @@ services:
   spark-worker:
     image: "yingding/spark_worker:latest"
     ports:
-      - "8081-8082:8081" # instead of "8081:8081" use "8081" to make auto port adding.
+      - "8081-8082:8081" # warning, the range of the host-port shall be the same as the number of replicas you want.
     networks:
       - spark-net-bridge
     environment:
@@ -41,6 +41,9 @@ networks: # define the
 # docker-compose -f MyFile.yml up
 # install docker compose with curl 2 steps
 # https://docs.docker.com/compose/install/
-# use
-# docker-compose -f docker-compose-standalone-server.yml up
+# use the -d option is important, otherwise it runs in foreground
+# docker-compose -f docker-compose-standalone-server.yml up -d
 # to start this application
+#
+# stop and remove the containers
+# docker-compose -f docker-compose-standalone-server.yml down -v
