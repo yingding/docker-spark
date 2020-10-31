@@ -1,0 +1,34 @@
+# This is the docker compose file for standalone cluster on a server host
+# Author: Yingding Wang
+version: "1"
+services:
+  spark-master:
+    image: "yingding/spark_master:latest"
+    ports:
+      - "8080:8080"
+      - "4040:4040"
+    networks:
+      - spark-net-bridge
+#    deploy:
+#      placement:
+#        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
+#        constraints:
+#          - node.labels.role==master
+  spark-worker:
+    image: "yingding/spark_worker:latest"
+    ports:
+      - "8081:8081"
+    networks:
+      - - spark-net-bridge
+    environment:
+      - CORES=3
+      - MEMORY=32G
+#    deploy:
+#      placement:
+#        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
+#        constraints:
+#          - node.labels.role==worker
+      replicas: 2
+networks: # define the
+  spark-net-bridge:
+    driver: bridge #overlay
