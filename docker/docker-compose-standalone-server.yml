@@ -35,5 +35,5 @@ networks: # define the
 #https://www.ionos.com/community/server-cloud-infrastructure/docker/launch-and-orchestrate-docker-containers-with-docker-compose/
 #https://vsupalov.com/flask-docker-compose-development-dependencies/
 # docker-compose -f MyFile.yml up
-# install docker compose with pip
+# install docker compose with curl 2 steps
 # https://docs.docker.com/compose/install/
