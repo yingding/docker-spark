@@ -31,4 +31,4 @@ services:
       replicas: 2
 networks: # define the
   spark-net-bridge:
-    driver: bridge #overlay
+    driver: bridge #overlay for multi hosts
