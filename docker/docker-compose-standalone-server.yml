@@ -19,16 +19,17 @@ services:
     ports:
       - "8081:8081"
     networks:
-      - - spark-net-bridge
+      - spark-net-bridge
     environment:
       - CORES=3
       - MEMORY=32G
-#    deploy:
+    deploy:
+      replicas: 2
 #      placement:
 #        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
 #        constraints:
 #          - node.labels.role==worker
-      replicas: 2
+
 networks: # define the
   spark-net-bridge:
     driver: bridge #overlay for multi hosts
@@ -37,3 +38,6 @@ networks: # define the
 # docker-compose -f MyFile.yml up
 # install docker compose with curl 2 steps
 # https://docs.docker.com/compose/install/
+# use
+# docker-compose -f docker-compose-standalone-server.yml up
+# to start this application
