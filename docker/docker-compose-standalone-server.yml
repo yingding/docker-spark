@@ -1,7 +1,7 @@
 # This is the docker compose file for standalone cluster on a server host
 # Author: Yingding Wang
 # Docker compose file version 3.3
-version: "3.3"
+version: "3.8"
 services:
   spark-master:
     image: "yingding/spark_master:latest"
@@ -18,12 +18,14 @@ services:
   spark-worker:
     image: "yingding/spark_worker:latest"
     ports:
-      - "8081:8081"
+      - "8081-8082:8081" # instead of "8081:8081" use "8081" to make auto port adding.
     networks:
       - spark-net-bridge
     environment:
       - CORES=3
       - MEMORY=32G
+    depends_on:
+      - spark-master
     deploy:
       replicas: 2
 #      placement:
