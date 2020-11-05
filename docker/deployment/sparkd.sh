@@ -110,9 +110,9 @@ running_container() {
 running() {
   # Check if the docker containers is running
   # check if container is running, otherwise return false = 1
-  running_container "$SPARK_MASTER_NAME" || return 1
+  running_container "$SPARK_MASTER_NAME" && return 0
   # running_container "SPARK_WORKERS_NAME" || return 1
-  return 0
+  return 1
 }
 
 start_services() {
