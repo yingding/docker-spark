@@ -9,7 +9,7 @@ services:
       - "8080:8080"
       - "4040:4040"
     networks:
-      - spark-net-bridge
+      - spark-net
 #    deploy:
 #      placement:
 #        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
@@ -20,7 +20,7 @@ services:
     ports:
       - "8081-8082:8081" # warning: the cardinality of the host-port range "8081-8082:xxxx" shall be the same as the number of replicas you want. In this example, the cardinality of "8081-8082" is 2 and replicas: 2. This means replica_1 container get port mapped as "8081:8081" and replica_2 "8082:8081". Notice "docker-host-port:container-exposed-port"
     networks:
-      - spark-net-bridge
+      - spark-net
     environment:
       - CORES=3
       - MEMORY=32G
@@ -34,5 +34,5 @@ services:
 #          - node.labels.role==worker
 
 networks: # define the
-  spark-net-bridge:
+  spark-net:
     driver: bridge #overlay for multi hosts
