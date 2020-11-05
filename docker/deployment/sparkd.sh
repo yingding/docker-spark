@@ -61,7 +61,7 @@ if ! type "$COMPOSE_BINARY" > /dev/null; then
 fi
 
 # Test existing file
-if test ! -x "$COMPOSE_CONFIG_PATH"; then
+if [[ ! -f "$COMPOSE_CONFIG_PATH" ]]; then
   echo "Could not find $COMPOSE_CONFIG_PATH"
   exit 0
 fi
