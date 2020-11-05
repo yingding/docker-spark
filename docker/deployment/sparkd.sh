@@ -46,6 +46,7 @@ DESC=engine
 NAME=sparkd
 # master service name in docker-compose file
 SPARK_MASTER_NAME="spark-master"
+SPARK_WORKERS_NAME="spark-worker"
 
 # Test existing command/binary
 
@@ -106,14 +107,10 @@ running_container() {
 
 running() {
   # Check if the docker containers is running
-  # check if the spark master docker container is running
-  if running_container "$SPARK_MASTER_NAME"; then
-    # 0 = true
-    return 0
-  else
-    # 1 = false
-    return 1
-  fi
+  # check if container is running, otherwise return false = 1
+  running_container "$SPARK_MASTER_NAME" || return 1
+  # running_container "SPARK_WORKERS_NAME" || return 1
+  return 0
 }
 
 start_services() {
