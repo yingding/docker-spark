@@ -75,6 +75,12 @@ fi
 # https://stackoverflow.com/questions/46164021/how-to-use-init-functions
 . /lib/lsb/init-functions
 
+STARTTIME=1
+DIETIME=10                  # Time to wait for the server to die, in seconds
+                            # If this value is set too low you might not
+                            # let some servers to die gracefully and
+                            # 'restart' will not work
+
 set -e
 
 # more complicated way is to write a health check command:
@@ -88,11 +94,11 @@ running_container() {
   # docker ps shows only those that are actually running.
   if [ -z `docker-compose ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q $service_name)` ]; then
     # use log_progress_msg this function will be called in running function and primarily in start option
-    log_progress_msg "No, $service_name is not running."
+    echo "No, $service_name is not running."
     # 1 = false
     return 1
   else
-    log_progress_msg "Yes, $service_name is running."
+    echo "Yes, $service_name is running."
     # 0 = true
     return 0
   fi
@@ -101,7 +107,7 @@ running_container() {
 running() {
   # Check if the docker containers is running
   # check if the spark master docker container is running
-  if running_container $SPARK_MASTER_NAME ; then
+  if running_container "$SPARK_MASTER_NAME"; then
     # 0 = true
     return 0
   else
@@ -112,7 +118,9 @@ running() {
 
 start_services() {
   # start service with docker-compose
-  docker-compose -f `$COMPOSE_CONFIG_PATH start`
+  `docker-compose -f $COMPOSE_CONFIG_PATH start`
+  errcode=$?
+  return $errcode
 }
 
 case "$1" in
@@ -124,6 +132,25 @@ case "$1" in
       log_end_msg 0
       exit 0
     fi
+    if start_services ; then
+      # NOTE: Some servers might die some time after they start,
+      # this code will detect this issue if STARTTIME is set
+      # to a reasonable value
+      [ -n "$STARTTIME" ] && sleep $STARTTIME # Wait some time
+      if  running ; then
+        # It's ok, the server started and is running
+        log_end_msg 0
+      else
+        # It is not running after we did start
+        log_end_msg 1
+      fi
+    else
+      # Either we could not start it
+      log_end_msg 1
+    fi
+    ;;
+  stop)
+    log_daemon_msg "Stopping $DESC" "$NAME"
 
     ;;
   *)
