@@ -93,16 +93,18 @@ running_container() {
   # https://serverfault.com/questions/789601/check-is-container-service-running-with-docker-compose/935674#935674
   # docker-compose ps -q <service_name> will display the container ID no matter it's running or not, as long as it was created.
   # docker ps shows only those that are actually running.
-  if [ -z `docker-compose ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q $service_name)` ]; then
+  [ -z `docker-compose ps -q $service_name` ] && return 1
+  [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q $service_name)` ] && return 1
+  return 0
     # use log_progress_msg this function will be called in running function and primarily in start option
-    echo "No, $service_name is not running."
+    # echo "No, $service_name is not running."
     # 1 = false
-    return 1
-  else
-    echo "Yes, $service_name is running."
+    # return 1
+  # else
+    # echo "Yes, $service_name is running."
     # 0 = true
-    return 0
-  fi
+    # return 0
+  # fi
 }
 
 running() {
@@ -138,10 +140,12 @@ case "$1" in
         # It's ok, the server started and is running
         log_end_msg 0
       else
+        log_progress_msg "not running after we did start"
         # It is not running after we did start
         log_end_msg 1
       fi
     else
+      log_progress_msg "Either we could not start it"
       # Either we could not start it
       log_end_msg 1
     fi
