@@ -38,6 +38,8 @@
 
 DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
+# path to the docker compose config file
+COMPOSE_CONFIG_PATH="docker-compose-standalone-server.yml"
 
 DESC=engine
 NAME=sparkd
@@ -45,24 +47,26 @@ NAME=sparkd
 SPARK_MASTER_NAME="spark-master"
 
 # Test existing command/binary
+
 # Reference: https://stackoverflow.com/questions/7522712/how-can-i-check-if-a-command-exists-in-a-shell-script/7522866#7522866
 if ! type "$DOCKER_ENGINE" > /dev/null; then
   echo "Could not find $DOCKER_ENGINE"
   exit 0
 fi
 
-# Test existing file existance
-#if test ! -x $DOCKER_DAEMON; then
-#  echo "Could not find $DOCKER_DAEMON"
-#  exit 0
-#fi
-
 if ! type "$COMPOSE_BINARY" > /dev/null; then
   echo "Could not find $COMPOSE_BINARY"
   exit 0
 fi
 
+# Test existing file
+if test ! -x $COMPOSE_CONFIG_PATH; then
+  echo "Could not find $COMPOSE_CONFIG_PATH"
+  exit 0
+fi
+
 # use log functions
+# https://stackoverflow.com/questions/46164021/how-to-use-init-functions
 . /lib/lsb/init-functions
 
 set -e
@@ -77,11 +81,12 @@ running_container() {
   # docker-compose ps -q <service_name> will display the container ID no matter it's running or not, as long as it was created.
   # docker ps shows only those that are actually running.
   if [ -z `docker-compose ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose ps -q $service_name)` ]; then
-    echo "No, $service_name is not running."
+    # use log_progress_msg this function will be called in running function and primarily in start option
+    log_progress_msg "No, $service_name is not running."
     # 1 = false
     return 1
   else
-    echo "Yes, $service_name is running."
+    log_progress_msg "Yes, $service_name is running."
     # 0 = true
     return 0
   fi
@@ -97,6 +102,11 @@ running() {
     # 1 = false
     return 1
   fi
+}
+
+start_services() {
+  # start service with docker-compose
+  docker-compose -f `$COMPOSE_CONFIG_PATH` start`
 }
 
 case "$1" in
