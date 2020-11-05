@@ -110,21 +110,22 @@ running_container() {
 running() {
   # Check if the docker containers is running
   # check if container is running, otherwise return false = 1
-  running_container "$SPARK_MASTER_NAME" && return 0
+  running_container "$SPARK_MASTER_NAME" && echo "f:running" || echo "f:not running";
+  running_container "$SPARK_MASTER_NAME" && return 0;
   # running_container "SPARK_WORKERS_NAME" || return 1
   return 1
 }
 
 start_services() {
   # start service with docker-compose
-  `docker-compose -f $COMPOSE_CONFIG_PATH start`
+  docker-compose -f $COMPOSE_CONFIG_PATH start
   errcode=$?
   return $errcode
 }
 
 stop_services() {
   # stop service with docker-compose
-  `docker-compose -f $COMPOSE_CONFIG_PATH stop`
+  docker-compose -f $COMPOSE_CONFIG_PATH stop
   errcode=$?
   return $errcode
 }
