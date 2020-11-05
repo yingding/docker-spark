@@ -21,8 +21,8 @@
 #
 ### BEGIN INIT INFO
 # Provides:          sparkd
-# Required-Start:    $network $local_fs $remote_fs
-# Required-Stop:     $network $local_fs $remote_fs
+# Required-Start:    $network $local_fs $remote_fs docker
+# Required-Stop:     $network $local_fs $remote_fs docker
 # Should-Start:      $named
 # Should-Stop:
 # Default-Start:     2 3 4 5
@@ -36,18 +36,27 @@
 #
 ### END INIT INFO
 
-DOCKER_DAEMON=docker
+DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
 
-if test ! -x $DOCKER_DAEMON; then
-  echo "Could not find $DOCKER_DAEMON"
+# Test existing command/binary
+# Reference: https://stackoverflow.com/questions/7522712/how-can-i-check-if-a-command-exists-in-a-shell-script/7522866#7522866
+if ! type "$DOCKER_ENGINE" > /dev/null; then
+  echo "Could not find $DOCKER_ENGINE"
   exit 0
 fi
 
-if test ! -x $COMPOSE_BINARY; then
+# Test existing file existance
+#if test ! -x $DOCKER_DAEMON; then
+#  echo "Could not find $DOCKER_DAEMON"
+#  exit 0
+#fi
+
+if ! type "$DOCKER_ENGINE" > /dev/null; then
   echo "Could not find $COMPOSE_BINARY"
   exit 0
 fi
+
 
 
 
