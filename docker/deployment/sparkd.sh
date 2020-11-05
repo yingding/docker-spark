@@ -98,23 +98,24 @@ running_container() {
   # docker-compose ps -q <service_name> will display the container ID no matter it's running or not, as long as it was created.
   # docker ps shows only those that are actually running.
 
-  # [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] && return 1
-  # through grep warning if service is not running
-  # [ -z `docker ps -q --no-trunc | grep $(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)` ] && return 1
-  # return 0
+  # test container doesn't exist
+  [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] && return 1
+  # test container is not running, may through grep warning if service is not running
+  [ -z `docker ps -q --no-trunc | grep "$(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ] && return 1
+  return 0
 
   # Reference https://serverfault.com/questions/789601/check-is-container-service-running-with-docker-compose/935674#935674
   # check if the service container does not exist at all first
-  # check if the service container does not running in docker engine
-  if [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep "$(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ]; then
-    # echo "No, $service_name is not running."
-    # 1 = false
-    return 1
-  else
-    # echo "Yes, $service_name is running."
-    # 0 = true
-    return 0
-  fi
+  # check if the service container does not running in docker engine, remove grep warning with "$(...)"
+  # if [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep "$(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ]; then
+  #  # echo "No, $service_name is not running."
+  #  # 1 = false
+  #  return 1
+  #else
+  #  # echo "Yes, $service_name is running."
+  #  # 0 = true
+  #  return 0
+  #fi
 }
 
 running() {
