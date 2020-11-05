@@ -106,7 +106,7 @@ running_container() {
   # Reference https://serverfault.com/questions/789601/check-is-container-service-running-with-docker-compose/935674#935674
   # check if the service container does not exist at all first
   # check if the service container does not running in docker engine
-  if [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep $(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)` ]; then
+  if [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] || [ -z `docker ps -q --no-trunc | grep "$(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ]; then
     # echo "No, $service_name is not running."
     # 1 = false
     return 1
