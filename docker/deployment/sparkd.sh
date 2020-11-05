@@ -38,9 +38,13 @@
 
 DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
-# path to the docker compose config file
+# TODO: change the absolute path of the directory where your docker-compose config resides
 COMPOSE_CONFIG_DIR=""
-COMPOSE_CONFIG_PATH=${COMPOSE_CONFIG_DIR}/docker-compose-standalone-server.yml
+# TODO: change the name of your docker-compose xxx.yml config file
+COMPOSE_FILE_NAME=docker-compose-standalone-server.yml
+
+# generated absolute path to the docker-compose config file
+COMPOSE_CONFIG_PATH=${COMPOSE_CONFIG_DIR}/${COMPOSE_FILE_NAME}
 
 DESC=engine
 NAME=sparkd
@@ -110,9 +114,9 @@ running_container() {
 running() {
   # Check if the docker containers is running
   # check if container is running, otherwise return false = 1
-  running_container "$SPARK_MASTER_NAME" && echo "f:running" || echo "f:not running";
-  running_container "$SPARK_MASTER_NAME" && return 0;
-  # running_container "SPARK_WORKERS_NAME" || return 1
+  # running_container "$SPARK_MASTER_NAME" && echo "f:running" || echo "f:not running";
+  running_container "$SPARK_MASTER_NAME" && return 0
+  running_container "$SPARK_WORKERS_NAME" && return 0
   return 1
 }
 
@@ -185,7 +189,7 @@ case "$1" in
     ;;
   *)
     N=/etc/init.d/$NAME
-    echo "Usage: $N {start|stop|restart|status}" >&2
+    echo "Usage: $N {start|stop|status}" >&2
     exit 1
     ;;
 esac
