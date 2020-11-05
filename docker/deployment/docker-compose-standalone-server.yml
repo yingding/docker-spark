@@ -36,14 +36,3 @@ services:
 networks: # define the
   spark-net-bridge:
     driver: bridge #overlay for multi hosts
-#https://www.ionos.com/community/server-cloud-infrastructure/docker/launch-and-orchestrate-docker-containers-with-docker-compose/
-#https://vsupalov.com/flask-docker-compose-development-dependencies/
-# docker-compose -f MyFile.yml up
-# install docker compose with curl 2 steps
-# https://docs.docker.com/compose/install/
-# use the -d option is important, otherwise it runs in foreground
-# docker-compose -f docker-compose-standalone-server.yml up -d
-# to start this application
-#
-# stop and remove the containers
-# docker-compose -f docker-compose-standalone-server.yml down -v
