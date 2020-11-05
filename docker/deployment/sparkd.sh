@@ -122,6 +122,13 @@ start_services() {
   return $errcode
 }
 
+stop_services() {
+  # stop service with docker-compose
+  `docker-compose -f $COMPOSE_CONFIG_PATH stop`
+  errcode=$?
+  return $errcode
+}
+
 case "$1" in
   start)
     log_daemon_msg "Starting $DESC" "$NAME"
@@ -152,7 +159,28 @@ case "$1" in
     ;;
   stop)
     log_daemon_msg "Stopping $DESC" "$NAME"
-
+    if running ; then
+      # Only stop services if we see it running
+      errcode=0
+      stop_services || errcode=$?
+      log_end_msg $errcode
+    else
+      # If it is not running don' do anything
+      log_progress_msg "apparently not running"
+      log_end_msg 0
+      exit 0
+    fi
+    ;;
+  status)
+    log_daemon_msg "Checking status of $DESC" "$NAME"
+    if running ; then
+      log_progress_msg "running"
+      log_end_msg 0
+    else
+      log_progress_msg "apparently not running"
+      log_end_msg 1
+      exit 1
+    fi
     ;;
   *)
     N=/etc/init.d/$NAME
