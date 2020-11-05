@@ -39,7 +39,8 @@
 DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
 # path to the docker compose config file
-COMPOSE_CONFIG_PATH="docker-compose-standalone-server.yml"
+COMPOSE_CONFIG_DIR="/"
+COMPOSE_CONFIG_PATH="${COMPOSE_CONFIG_DIR}/docker-compose-standalone-server.yml"
 
 DESC=engine
 NAME=sparkd
