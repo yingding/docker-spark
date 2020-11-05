@@ -40,7 +40,7 @@ DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
 # path to the docker compose config file
 COMPOSE_CONFIG_DIR=""
-COMPOSE_CONFIG_PATH="${COMPOSE_CONFIG_DIR}/docker-compose-standalone-server.yml"
+COMPOSE_CONFIG_PATH=${COMPOSE_CONFIG_DIR}/docker-compose-standalone-server.yml
 
 DESC=engine
 NAME=sparkd
@@ -60,8 +60,11 @@ if ! type "$COMPOSE_BINARY" > /dev/null; then
   exit 0
 fi
 
+# Test in console
+# test ! -f "docker-compose-standalone-server.yml" && echo "not found" || echo "found"
+#
 # Test existing file
-if test ! -f "$COMPOSE_CONFIG_PATH"; then
+if test ! -f ${COMPOSE_CONFIG_PATH}; then
   echo "Could not find $COMPOSE_CONFIG_PATH"
   exit 0
 fi
@@ -129,7 +132,3 @@ case "$1" in
 esac
 
 exit 0
-
-
-
-
