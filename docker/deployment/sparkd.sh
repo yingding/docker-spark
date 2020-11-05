@@ -60,11 +60,13 @@ if ! type "$COMPOSE_BINARY" > /dev/null; then
   exit 0
 fi
 
+# test -x $program_binary # test if a program exists and is executable
+
 # Test in console
 # test ! -f "docker-compose-standalone-server.yml" && echo "not found" || echo "found"
 #
 # Test existing file
-if [ ! -f "$COMPOSE_CONFIG_PATH" ]; then
+if test ! -f "$COMPOSE_CONFIG_PATH"; then
   echo "Could not find $COMPOSE_CONFIG_PATH"
   exit 0
 fi
@@ -110,7 +112,7 @@ running() {
 
 start_services() {
   # start service with docker-compose
-  docker-compose -f `$COMPOSE_CONFIG_PATH` start`
+  docker-compose -f `$COMPOSE_CONFIG_PATH start`
 }
 
 case "$1" in
