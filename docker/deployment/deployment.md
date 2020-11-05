@@ -6,6 +6,13 @@
 3. `groups <docker_user>` to see if your user is in the docker group
 4. run with your `<docker_user>` the command `docker-compose --version`
 
+###1.1 Fixing docker-compose takes a long time to do anything issue
+
+Some times the docker-compose took very long to run. It may due to the [low entropy of your host](https://github.com/docker/compose/issues/6552). 
+* check if your available entropy is blow 200 with `cat /proc/sys/kernel/random/entropy_avail`
+* If that is the case install *haveged* random number generator with root user `apt install -y haveged`
+* check your available entropy again with `cat /proc/sys/kernel/random/entropy_avail`, now you shall see the available entropy is over 1000
+
 ##2. docker-compose config file
 
 ##3. docker-compose file format and Docker compatibility
