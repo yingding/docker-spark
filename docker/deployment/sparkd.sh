@@ -64,7 +64,7 @@ fi
 # test ! -f "docker-compose-standalone-server.yml" && echo "not found" || echo "found"
 #
 # Test existing file
-if [ ! -f $COMPOSE_CONFIG_PATH ]; then
+if [ ! -f "$COMPOSE_CONFIG_PATH" ]; then
   echo "Could not find $COMPOSE_CONFIG_PATH"
   exit 0
 fi
