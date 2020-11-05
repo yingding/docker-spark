@@ -34,5 +34,5 @@ services:
 #          - node.labels.role==worker
 
 networks: # define the
-  spark-net:
+  spark-net: # docker-compose is adding deployment_ prefix, thus name of bridge net can only have one hyphen
     driver: bridge #overlay for multi hosts
