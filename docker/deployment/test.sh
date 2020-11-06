@@ -7,7 +7,7 @@
 # https://stackoverflow.com/questions/41345039/how-to-read-multiline-input-into-an-array-in-bash-shell-script
 # are not available
 
-COMPOSE_CONFIG_DIR=/home/analytics/docker-spark/docker/deployment
+COMPOSE_CONFIG_DIR=""
 # TODO: change the name of your docker-compose xxx.yml config file
 COMPOSE_FILE_NAME=docker-compose-standalone-server.yml
 
