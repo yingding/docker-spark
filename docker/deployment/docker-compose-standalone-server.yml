@@ -6,8 +6,9 @@ services:
   spark-master:
     image: "yingding/spark_master:latest"
     ports:
-      - "8080:8080"
-      - "4040:4040"
+      - "8080:8080" # WEB UI port of SparkMaster
+      - "7077:7077" # Submission port of SparkMaster
+      - "4040:4040" # optional WEB UI port for a local testing driver (sec. container shell process can be started if needed)
     networks:
       - spark-net
 #    deploy:
