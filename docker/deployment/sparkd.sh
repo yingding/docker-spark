@@ -51,7 +51,7 @@ NAME=sparkd
 # master service name in docker-compose file
 SPARK_MASTER_NAME="spark-master"
 SPARK_WORKER_NAME="spark-worker"
-SPARk_WORKER_1_NAME="${SPARK_WORKERS_NAME}_1"
+SPARK_WORKER_1_NAME="${SPARK_WORKERS_NAME}_1"
 
 # Test existing command/binary
 
