@@ -125,7 +125,7 @@ running() {
   # check if container is running, otherwise return false = 1
   # running_container "$SPARK_MASTER_NAME" && echo "f:running" || echo "f:not running";
   running_container "$SPARK_MASTER_NAME" && return 0
-  running_container "$SPARK_WORKER_1_NAME" && return 0 # WARNING: since there might be multiple workers, thus only check the id of first worker, otherwise docker-compose ps $SPARK_WORKER_NAME may return multiple line output and grep can not handle it.
+  # running_container "$SPARK_WORKER_1_NAME" && return 0 # WARNING: since there might be multiple workers, thus only check the id of first worker, otherwise docker-compose ps $SPARK_WORKER_NAME may return multiple line output and grep can not handle it.
   return 1
 }
 
