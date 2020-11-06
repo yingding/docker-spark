@@ -54,6 +54,15 @@ SPARK_MASTER_NAME="spark-master"
 SPARK_WORKER_NAME="spark-worker"
 SPARK_WORKER_1_NAME="${SPARK_WORKER_NAME}_1" #spark-worker_1
 
+# DAEMONUSER=${DAEMONUSER:-analytics}
+# DAEMONGROUP=${DAEMONGROUP:-analytics}
+
+STARTTIME=1
+DIETIME=10                  # Time to wait for the server to die, in seconds
+                            # If this value is set too low you might not
+                            # let some servers to die gracefully and
+                            # 'restart' will not work
+
 # Test existing command/binary
 
 # Reference: https://stackoverflow.com/questions/7522712/how-can-i-check-if-a-command-exists-in-a-shell-script/7522866#7522866
@@ -82,12 +91,7 @@ fi
 # https://stackoverflow.com/questions/46164021/how-to-use-init-functions
 . /lib/lsb/init-functions
 
-STARTTIME=1
-DIETIME=10                  # Time to wait for the server to die, in seconds
-                            # If this value is set too low you might not
-                            # let some servers to die gracefully and
-                            # 'restart' will not work
-
+# set to make the execution more reliable
 set -e
 
 # more complicated way is to write a health check command:
