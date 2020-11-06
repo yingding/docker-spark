@@ -14,6 +14,8 @@ use `sudo cp sparkd.sh /etc/init.d/sparkd`
 use `sudo chmod 755 /etc/init.d/sparkd`
 
 ## Activate spard for run level files on ubuntu
+Notice reload doesn't work for a none native service
+use `sudo systemctl disable sparkd`
 use `sudo systemctl enable sparkd`
 
 ## Testing 
