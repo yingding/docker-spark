@@ -12,6 +12,8 @@ services:
                     # publish to 4041, the external spark driver program might use 4040
     networks:
       - spark-net
+#    environment:
+#      - SPARK_JARS_PACKAGE='org.mongodb.spark:mongo-spark-connector_2.12:3.0.0' # install additional jar dependency
 #    deploy:
 #      placement:
 #        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
@@ -26,6 +28,7 @@ services:
     environment:
       - CORES=1
       - MEMORY=1G
+      # - SPARK_JARS_PACKAGE='org.mongodb.spark:mongo-spark-connector_2.12:3.0.0' # install additional jar dependency
     depends_on:
       - spark-master
     deploy:

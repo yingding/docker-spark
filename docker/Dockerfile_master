@@ -3,11 +3,15 @@ FROM yingding/spark_base
 ENV SPARK_MASTER_PORT 7077
 ENV SPARK_MASTER_WEBUI_PORT 8080
 ENV SPARK_MASTER_LOG /spark/logs
+# additional jar package from mvn central
 
 # copy entry point to root
 COPY ./scripts/master/entrypoint.sh /
 # set entry point runable
 RUN chmod +x /entrypoint.sh
+
+# copy default conf file to install additional package
+COPY ./resources/log4j.properties ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
 
 # expose 4040 for the scala interactive shell to publish the job scheduler url
 EXPOSE 8080 4040 7077

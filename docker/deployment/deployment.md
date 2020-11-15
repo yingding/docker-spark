@@ -57,3 +57,13 @@ Reference: https://stackoverflow.com/questions/48546124/what-is-linux-equivalent
 * docker network inspect <network_name>
 * find the gateway ip, you need to hard code it in your external driver program for the `spark.driver.host=gateway_ip`
 
+### Examine container os
+How to see the os of a docker container:
+
+Reference: https://serverfault.com/questions/805389/which-os-is-running-in-my-docker-container/805390#805390
+
+`cat /etc/os-release`
+
+BASE OS
+http://www.floydhilton.com/docker/2017/03/31/Docker-ContainerHost-vs-ContainerOS-Linux-Windows.html
+

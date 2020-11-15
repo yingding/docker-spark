@@ -5,11 +5,15 @@ ENV CORES=3
 ENV MEMORY=6G
 ENV SPARK_WORKER_WEBUI_PORT 8081
 ENV SPARK_WORKER_LOG /spark/logs
+# additional jar package from mvn central
 
 # copy entry point to root
 COPY ./scripts/worker/entrypoint.sh /
 # set entry point runable
 RUN chmod +x /entrypoint.sh
+
+# copy default conf file to install additional package
+COPY ./resources/log4j.properties ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
 
 EXPOSE 8081
 
