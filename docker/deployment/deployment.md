@@ -13,7 +13,11 @@ Some times the docker-compose took very long to run. It may due to the [low entr
 * If that is the case install *haveged* random number generator with root user `apt install -y haveged`
 * check your available entropy again with `cat /proc/sys/kernel/random/entropy_avail`, now you shall see the available entropy is over 1000
 
-##2. docker-compose config file
+##2.1 docker-compose config file
+
+##2.2 .env file to set project name
+* https://docs.docker.com/compose/env-file/
+* https://github.com/docker/compose/issues/1123
 
 ##3. docker-compose file format and Docker compatibility
 * Follow the link https://docs.docker.com/compose/compose-file/ to see the docker-compose file format with docker version compatibility.
