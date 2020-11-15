@@ -8,7 +8,8 @@ services:
     ports:
       - "8080:8080" # WEB UI port of SparkMaster
       - "7077:7077" # Submission port of SparkMaster
-      - "4040:4040" # optional WEB UI port for a local testing driver (sec. container shell process can be started if needed)
+      - "4041:4040" # optional WEB UI port for a local testing driver (sec. container shell process can be started if needed),
+                    # publish to 4041, the external spark driver program might use 4040
     networks:
       - spark-net
 #    deploy:
@@ -19,7 +20,7 @@ services:
   spark-worker:
     image: "yingding/spark_worker:latest"
     ports:
-      - "8081:8081" # warning: the cardinality of the host-port range "8081-8082:xxxx" shall be the same as the number of replicas you want. In this example, the cardinality of "8081-8082" is 2 and replicas: 2. This means replica_1 container get port mapped as "8081:8081" and replica_2 "8082:8081". Notice "docker-host-port:container-exposed-port"
+      - "8081-8082:8081" # warning: the cardinality of the host-port range "8081-8082:xxxx" shall be the same as the number of replicas you want. In this example, the cardinality of "8081-8082" is 2 and replicas: 2. This means replica_1 container get port mapped as "8081:8081" and replica_2 "8082:8081". Notice "docker-host-port:container-exposed-port"
     networks:
       - spark-net
     environment:
@@ -28,7 +29,7 @@ services:
     depends_on:
       - spark-master
     deploy:
-      replicas: 1
+      replicas: 2
 #      placement:
 #        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
 #        constraints:
@@ -38,7 +39,8 @@ services:
 networks: # define the network
   spark-net: # docker-compose is adding deployment_ prefix, thus name of bridge net can only have one hyphen
     driver: bridge #overlay for multi hosts
-    ipam: # https://docs.docker.com/compose/networking/
+    # enable_ipv6: true
+    ipam: # https://docs.docker.com/compose/compose-file/compose-file-v2/#ipv4_address-ipv6_address
       driver: default
       config:
         - subnet: 172.18.0.0/16

@@ -44,3 +44,16 @@ Some times the docker-compose took very long to run. It may due to the [low entr
 * https://vsupalov.com/flask-docker-compose-development-dependencies/
 * https://nickjanetakis.com/blog/docker-tip-45-docker-compose-stop-vs-down
 * https://docs.docker.com/compose/faq/
+
+### Communicate from Docker Container to Outside would.
+#### On Windows/Mac: host.docker.internal
+Reference: https://stackoverflow.com/questions/48546124/what-is-linux-equivalent-of-host-docker-internal
+* you need to hard code it in your external driver program for the `spark.driver.host=host.docker.internal`
+
+#### On Linux: Bridge Gateway IP
+Reference: https://stackoverflow.com/questions/48546124/what-is-linux-equivalent-of-host-docker-internal
+
+* docker network ls
+* docker network inspect <network_name>
+* find the gateway ip, you need to hard code it in your external driver program for the `spark.driver.host=gateway_ip`
+
