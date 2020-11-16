@@ -11,7 +11,8 @@ ENV SPARK_EXECUTOR_CORES=3
 
 # Copy examples python files into container
 # COPY ./examples/ /home/examples/
-COPY ./resources/log4j.properties ./resources/submit/spark-defaults.conf $SPARK_HOME/conf/
+COPY ./resources/log4j.properties ./resources/spark-env.sh ./resources/submit/spark-defaults.conf $SPARK_HOME/conf/
+RUN chmod +x $SPARK_HOME/conf/spark-env.sh
 
 EXPOSE 4040 8888
 

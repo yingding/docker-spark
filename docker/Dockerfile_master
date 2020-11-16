@@ -11,7 +11,8 @@ COPY ./scripts/master/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 # copy default conf file to install additional package
-COPY ./resources/log4j.properties ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
+COPY ./resources/pom.xml ./resources/log4j.properties ./resources/spark-env.sh ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
+RUN chmod +x $SPARK_HOME/conf/spark-env.sh
 
 # expose 4040 for the scala interactive shell to publish the job scheduler url
 EXPOSE 8080 4040 7077

@@ -35,7 +35,7 @@ ENV SPARK_OPTS="--driver-java-options='-Xms1024M -Xmx4096M -Dlog4j.logLevel=info
 # Software properties common for python3
 # RUN apt-get update && apt-get install -y apt-utils
 # debconf: delaying package configuration, since apt-utils is not installed can be safely ignored
-RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates iputils-ping inetutils-telnet
+RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates iputils-ping inetutils-telnet maven ivy
 
 # Tutorial
 # https://github.com/mvillarrealb/docker-spark-cluster/blob/master/docker/base/Dockerfile

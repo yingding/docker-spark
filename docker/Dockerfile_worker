@@ -14,7 +14,10 @@ COPY ./scripts/worker/entrypoint.sh /
 RUN chmod +x /entrypoint.sh
 
 # copy default conf file to install additional package
-COPY ./resources/log4j.properties ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
+COPY ./resources/pom.xml ./resources/log4j.properties ./resources/spark-env.sh ./resources/cluster/spark-defaults.conf $SPARK_HOME/conf/
+RUN chmod +x $SPARK_HOME/conf/spark-env.sh
+
+# TODO: run mvn to compile the spark mongo driver and dependeny and added the jar to /spark/jars , just for worker no need for master
 
 EXPOSE 8081
 
