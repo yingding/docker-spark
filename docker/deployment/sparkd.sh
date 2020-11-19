@@ -38,7 +38,10 @@
 
 DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
-# compose project name shall be the same as the .env, so that when starting from different directory this init.d script, the project name can be overwritten
+# WARNING: compose project name shall be the same as the .env, so that when starting from different directory this init.d script,
+# the project name can be overwritten, without the commandline project name override,
+# the parent folder name will be taken as project name, which will be different from the .env file
+# thus double check, the project name in .env and in the sparkd.sh are the same.
 COMPOSE_PROJ_NAME=docker
 # TODO: change the absolute path of the directory where your docker-compose config resides
 COMPOSE_CONFIG_DIR=""
