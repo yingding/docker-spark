@@ -23,7 +23,9 @@ RUN chmod +x $SPARK_HOME/conf/spark-env.sh
 RUN mkdir $EXTRA_JAR
 COPY ./resources/pom.xml $EXTRA_JAR
 WORKDIR $EXTRA_JAR
+
 # -B batch mode, no interactive
+# https://stackoverflow.com/questions/42208442/maven-docker-cache-dependencies/52808343#52808343
 RUN mvn -B --fail-never dependency:resolve && \
     mvn -B --fail-never package && \
     mv ${EXTRA_JAR}/target/${EXTRA_JAR_NAME}.jar ${SPARK_HOME}/jars && \
