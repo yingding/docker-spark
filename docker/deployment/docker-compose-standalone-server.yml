@@ -34,6 +34,13 @@ services:
 #        constraints:
 #          - node.labels.role==worker
 
+# https://docs.docker.com/compose/networking/
 networks: # define the
   spark-net: # docker-compose is adding deployment_ prefix, thus name of bridge net can only have one hyphen
     driver: bridge #overlay for multi hosts
+    # enable_ipv6: true
+    ipam: # https://docs.docker.com/compose/compose-file/compose-file-v2/#ipv4_address-ipv6_address
+      driver: default
+      config:
+        - subnet: 172.18.0.0/16
+          gateway: 172.18.0.1
