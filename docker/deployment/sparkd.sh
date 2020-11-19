@@ -38,6 +38,8 @@
 
 DOCKER_ENGINE=docker
 COMPOSE_BINARY=docker-compose
+# compose project name shall be the same as the .env, so that when starting from different directory this init.d script, the project name can be overwritten
+COMPOSE_PROJ_NAME=docker
 # TODO: change the absolute path of the directory where your docker-compose config resides
 COMPOSE_CONFIG_DIR=""
 # TODO: change the name of your docker-compose xxx.yml config file
@@ -105,9 +107,9 @@ running_container() {
   # docker ps shows only those that are actually running.
 
   # test container doesn't exist
-  [ -z `docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] && return 1
+  [ -z `docker-compose -p $COMPOSE_PROJ_NAME -f $COMPOSE_CONFIG_PATH ps -q $service_name` ] && return 1
   # test container is not running, may through grep warning if service is not running
-  [ -z `docker ps -q --no-trunc | grep "$(docker-compose -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ] && return 1
+  [ -z `docker ps -q --no-trunc | grep "$(docker-compose -p $COMPOSE_PROJ_NAME -f $COMPOSE_CONFIG_PATH ps -q $service_name)"` ] && return 1
   return 0
 
   # Reference https://serverfault.com/questions/789601/check-is-container-service-running-with-docker-compose/935674#935674
@@ -135,14 +137,14 @@ running() {
 
 start_services() {
   # start service with docker-compose
-  docker-compose -f $COMPOSE_CONFIG_PATH start
+  docker-compose -p $COMPOSE_PROJ_NAME -f $COMPOSE_CONFIG_PATH start
   errcode=$?
   return $errcode
 }
 
 stop_services() {
   # stop service with docker-compose
-  docker-compose -f $COMPOSE_CONFIG_PATH stop
+  docker-compose -p $COMPOSE_PROJ_NAME -f $COMPOSE_CONFIG_PATH stop
   errcode=$?
   return $errcode
 }
