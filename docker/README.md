@@ -26,7 +26,7 @@ docker build -f Dockerfile_worker -t yingding/spark_worker .
 this command will create an image named `yingding/spark_worker:latest`
 
 ## 1.2 Deploy containers with docker-compose
-Note: docker-compose shall be installed on your system before you execute the following commandlines, following [deployment.md](deployment.md) to install and config docker-compose on your ubuntu system.
+Note: docker-compose shall be installed on your system before you execute the following commandlines, following [deployment.md](deployment/deployment.md) to install and config docker-compose on your ubuntu system.
 
 #### 1.2.1 Create and start containers
 ``` 
