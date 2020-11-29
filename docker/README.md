@@ -40,7 +40,7 @@ docker ps -a
 docker network ls
 docker network inspect docker_spark-net
 ```
-these commands show all created containers, and all networks associated with docker. It also shows the details of a particular network called `docker_spark-net`, to which all spark master and workder containers are associated.
+these commands show all created containers, and all networks associated with docker. It also shows the details of a particular network called `docker_spark-net`, to which all spark master and worker containers are associated.
 
  
 ## 1.3 Play around with Spark Stand-alone Cluster
@@ -58,7 +58,7 @@ Type in the previous bash tty starts for the spark master node the following com
 ```
 $SPARK_HOME/bin/spark-shell --conf spark.executor.memory=1G --conf spark.executor.cores=1 --master spark://spark-master:7077 --packages org.mongodb.spark:mongo-spark-connector_2.12:3.0.0
 ```
-you may remove the `--packages` option, shall you do not need to use additional package for your code submitted through spark driver. In this example, i added an additional mongo-spark-connector` lib to the interactive spark shell.
+you may remove the `--packages` option, should you do not need to use additional package for your code submitted through spark driver. In this example, i added an additional mongo-spark-connector` lib to the interactive spark shell.
 
 #### 1.3.3 Programming inside spark shell
 Type the following scala code in your spark scala shell to test the Spark Cluster, you shall see the output value `5000`.
@@ -109,7 +109,7 @@ docker-compose -f docker-compose-standalone-desktop.yml down
 
 ## 1.5 remove docker images
 * use `docker images` to show all available docker images and examine the image ids
-* use docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
+* use `docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
 
 
 # 2. Quick Start for k8s and Podman
