@@ -1,6 +1,6 @@
 # 1. Quick Start for docker and docker-compose 
 
-This documentation gives a short introduction of using the spark with docker, and docker-compose in Linux or Macosx. It is assumed that docker and docker-compose are already instead successfully on your system before executing the following commands. 
+This documentation gives a short introduction of using the spark with docker, and docker-compose in Linux or Macosx. It is assumed that docker and docker-compose are already installed successfully on your system before executing the following commands. 
 
 ## 1.1 Create images on your system
 * check out this repository and go to the docker sub-folder.
