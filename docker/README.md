@@ -3,7 +3,7 @@
 This documentation gives a short introduction of using the spark with docker, and docker-compose in Linux or Macosx. It is assumed that docker and docker-compose are already installed successfully on your system before executing the following commands. 
 
 ## 1.1 Create images on your system
-* check out this repository and go to the docker sub-folder.
+check out this repository and go to the docker sub-folder.
 ```
 cd <path to repo root>/docker-spark/docker
 ```
@@ -109,7 +109,7 @@ docker-compose -f docker-compose-standalone-desktop.yml down
 
 ## 1.5 remove docker images
 * use `docker images` to show all available docker images and examine the image ids
-* use `docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
+* use docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
 
 
 # 2. Quick Start for k8s and Podman
