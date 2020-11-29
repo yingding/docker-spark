@@ -109,7 +109,7 @@ docker-compose -f docker-compose-standalone-desktop.yml down
 
 ## 1.5 remove docker images
 * use `docker images` to show all available docker images and examine the image ids
-* use docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
+* use `docker image rm <imageId1> <imageId2>` to remove all spark images (base, master, worker)
 
 
 # 2. Quick Start for k8s and Podman
