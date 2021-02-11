@@ -12,7 +12,8 @@ services:
                     # publish to 4041, the external spark driver program might use 4040
     networks:
       - spark-net
-
+#      - spark-net:
+#          ipv4_address: 172.18.0.2
 #    environment:
 #      - SPARK_JARS_PACKAGE='org.mongodb.spark:mongo-spark-connector_2.12:3.0.0' # install additional jar dependency
 #    deploy:
@@ -34,7 +35,7 @@ services:
     depends_on:
       - spark-master
     deploy:
-      replicas: 2
+      replicas: 1
 #      placement:
 #        # set node labels using docker node update --label-add key=value <NODE ID> from swarm manager
 #        constraints:
@@ -43,10 +44,15 @@ services:
 # https://docs.docker.com/compose/networking/
 networks: # define the network
   spark-net: # docker-compose is adding deployment_ prefix, thus name of bridge net can only have one hyphen
-    driver: bridge #overlay for multi hosts
-    # enable_ipv6: true
-    ipam: # https://docs.docker.com/compose/compose-file/compose-file-v2/#ipv4_address-ipv6_address
-      driver: default
-      config:
-        - subnet: 172.18.0.0/16
-          gateway: 172.18.0.1
+    external: #overlay for multi hosts
+      name: host
+
+#networks: # define the network
+#  spark-net: # docker-compose is adding deployment_ prefix, thus name of bridge net can only have one hyphen
+#    driver: bridge #overlay for multi hosts
+#    # enable_ipv6: true
+#    ipam: # https://docs.docker.com/compose/compose-file/compose-file-v2/#ipv4_address-ipv6_address
+#      driver: default
+#      config:
+#        - subnet: 172.18.0.0/16
+#          gateway: 172.18.0.1
