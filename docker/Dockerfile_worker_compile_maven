@@ -6,8 +6,8 @@ ENV CORES=3
 ENV MEMORY=6G
 ENV SPARK_WORKER_WEBUI_PORT=8081
 ENV SPARK_WORKER_LOG=/spark/logs
-# ENV EXTRA_JAR=/extraJar
-# ENV EXTRA_JAR_NAME=spark-mongo-driver-1.0-with-dependencies
+ENV EXTRA_JAR=/extraJar
+ENV EXTRA_JAR_NAME=spark-mongo-driver-1.0-with-dependencies
 # additional jar package from mvn central
 
 # copy entry point to root
@@ -20,23 +20,23 @@ COPY ./resources/log4j.properties ./resources/spark-env.sh ./resources/cluster/s
 RUN chmod +x $SPARK_HOME/conf/spark-env.sh
 
 # ADD additional Runtime dependency for spark worker nodes
-# RUN mkdir $EXTRA_JAR
-# COPY ./resources/pom.xml $EXTRA_JAR
-# WORKDIR $EXTRA_JAR
+RUN mkdir $EXTRA_JAR
+COPY ./resources/pom.xml $EXTRA_JAR
+WORKDIR $EXTRA_JAR
 
 # -B batch mode, no interactive
 # https://stackoverflow.com/questions/42208442/maven-docker-cache-dependencies/52808343#52808343
-# RUN mvn -B --fail-never dependency:resolve && \
-#    mvn -B --fail-never package && \
-#    mv ${EXTRA_JAR}/target/${EXTRA_JAR_NAME}.jar ${SPARK_HOME}/jars && \
-#    rm -rf ./target && \
-#    mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false && \
-#    rm -rf /root/.m2/
+RUN mvn -B --fail-never dependency:resolve && \
+    mvn -B --fail-never package && \
+    mv ${EXTRA_JAR}/target/${EXTRA_JAR_NAME}.jar ${SPARK_HOME}/jars && \
+    rm -rf ./target && \
+    mvn dependency:purge-local-repository -DactTransitively=false -DreResolve=false && \
+    rm -rf /root/.m2/
 # purge the local repository https://stackoverflow.com/questions/53841126/what-does-mvn-verify-command-do
 # and also remove the maven /root/.m2 repository folder
 
 # go back to root
-# WORKDIR /
+WORKDIR /
 
 EXPOSE 8081
 
