@@ -18,6 +18,14 @@ services:
 #          - node.labels.role==master
   spark-worker:
     image: "yingding/spark_worker:latest"
+    ## use a bind mounts instead of volumes: https://docs.docker.com/storage/bind-mounts/
+    volumes:
+      - type: bind #  bind mounts the existing file structure from the docker host.
+        source: ${MY_SPARK_EXTRA_JAR_PATH}  # host file or directory "$(pwd)"/sparkExtraJar, use "$(pwd)" to read the current file path
+        target: /sparkExtraJar # container file or directory
+      - type: bind
+        source: ${MY_SPARK_MODEL_PATH} # get the .env variable for path "$(pwd)"/.env
+        target: /models # container file or directory
     ports:
       - "8081-8082:8081" # warning: the cardinality of the host-port range "8081-8082:xxxx" shall be the same as the number of replicas you want. In this example, the cardinality of "8081-8082" is 2 and replicas: 2. This means replica_1 container get port mapped as "8081:8081" and replica_2 "8082:8081". Notice "docker-host-port:container-exposed-port"
     networks:
