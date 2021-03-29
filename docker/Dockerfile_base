@@ -4,10 +4,12 @@
 # FROM adoptopenjdk:11.0.8_10-jdk-openj9-0.21.0-bionic
 # FROM adoptopenjdk:11.0.8_10-jdk-hotspot-bionic
 # Tag: 11.0.9_11-jdk-hotspot
-FROM adoptopenjdk:11.0.9_11-jdk-hotspot-focal
+# FROM adoptopenjdk:11.0.9_11-jdk-hotspot-focal
+# Tag: 11.0.10_9-jdk-hotspot
+FROM adoptopenjdk:11.0.10_9-jdk-hotspot-focal
 
 LABEL author="Yingding Wang"
-LABEL version="0.1"
+LABEL version="0.2"
 
 # Docker Multistage build // copy from python:3.6 image
 # https://docs.docker.com/develop/develop-images/multistage-build/
@@ -15,7 +17,7 @@ LABEL version="0.1"
 
 # Set env variables
 ENV DAEMON_RUN=true
-ENV SPARK_VERSION=3.0.1
+ENV SPARK_VERSION=3.0.2
 ENV HADOOP_VERSION=3.2
 ENV SCALA_VERSION=2.12.12
 ENV SCALA_HOME=/usr/share/scala
@@ -35,7 +37,9 @@ ENV SPARK_OPTS="--driver-java-options='-Xms1024M -Xmx4096M -Dlog4j.logLevel=info
 # Software properties common for python3
 # RUN apt-get update && apt-get install -y apt-utils
 # debconf: delaying package configuration, since apt-utils is not installed can be safely ignored
-RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates iputils-ping inetutils-telnet maven ivy
+
+# Note: use apt-get clean to clean some cached repository or file, otherwise it will run into error.
+RUN apt-get clean && apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates iputils-ping inetutils-telnet maven ivy
 
 # Tutorial
 # https://github.com/mvillarrealb/docker-spark-cluster/blob/master/docker/base/Dockerfile
