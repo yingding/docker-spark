@@ -6,7 +6,7 @@
 
     <groupId>com.stila.analytics</groupId>
     <artifactId>spark-mongo-driver</artifactId>
-    <version>3.0.3</version> <!-- use the connector version to indicate the project version -->
+    <version>3.1.0</version> <!-- use the connector version to indicate the project version -->
     <!-- template from https://github.com/big-data-europe/demo-spark-sensor-data/blob/master/pom.xml -->
     <!-- https://github.com/big-data-europe/docker-spark/blob/master/template/java/Dockerfile -->
 
