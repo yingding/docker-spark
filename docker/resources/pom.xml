@@ -6,12 +6,13 @@
 
     <groupId>com.stila.analytics</groupId>
     <artifactId>spark-mongo-driver</artifactId>
-    <version>3.1.0</version> <!-- use the connector version to indicate the project version -->
+    <!-- s for spark and c for mongo spark connector -->
+    <version>s-3.1.2-c-3.0.1</version> <!-- use the connector version to indicate the project version -->
     <!-- template from https://github.com/big-data-europe/demo-spark-sensor-data/blob/master/pom.xml -->
     <!-- https://github.com/big-data-europe/docker-spark/blob/master/template/java/Dockerfile -->
 
     <properties>
-        <spark.version>3.0.2</spark.version>
+        <spark.version>3.1.2</spark.version>
         <spark.mongo.connector.version>3.0.1</spark.mongo.connector.version>
     </properties>
     <!-- Important: all spark package are added as provided, for runtime -->
